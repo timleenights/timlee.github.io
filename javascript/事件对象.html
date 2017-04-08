@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Tim's Blog</title>
+  <link href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link href="/css/main.css" rel="stylesheet">
+  <link href="/css/syntax.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Tim's Blog</a>
+    </div>
+    <div class="collapse navbar-collapse" id="navbar-collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/"><i class="fa fa-home fa-fw" aria-hidden="true"></i>&nbsp;Home</a></li>
+        <li><a href="/collections/"><i class="fa fa-link fa-fw" aria-hidden="true"></i>&nbsp;Collections</a></li>
+        <li><a href="/demo/"><i class="fa fa-forward fa-fw" aria-hidden="true"></i>&nbsp;Demo</a></li>
+        <li><a href="/feed.xml"><i class="fa fa-rss fa-fw" aria-hidden="true"></i>&nbsp;RSS</a></li>
+        <li><a href="/about/"><i class="fa fa-user fa-fw" aria-hidden="true"></i>&nbsp;About</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+<div class="content">
+  <div class="container">
+    <div class="row">
+      <div class="main col-lg-9 col-md-8 col-sm-12 col-xs-12">
+        
+
+<article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a href="/javascript/%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1.html">事件对象</a></h1>
+    <p class="post-meta">2017年3月6日 <a href="/category/javascript/" title="JavaScript">JavaScript</a></p>
+  </header>
+
+  <div class="post-content">
+    <blockquote>
+  <p>当一个事件被触发的时候，会创建一个事件对象 (Event Object)。这个对象包含一些属性或者方法。</p>
+</blockquote>
+
+<h2 id="1-eventtarget-和-eventcurrenttarget">1. <code class="highlighter-rouge">event.target</code> 和 <code class="highlighter-rouge">event.currentTarget</code></h2>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"a"</span><span class="nt">&gt;</span>aaaaaaaaa
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"b"</span><span class="nt">&gt;</span>bbbbbbbbbb
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"c"</span><span class="nt">&gt;</span>ccccccccccc
+      <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"d"</span><span class="nt">&gt;</span>dddddddddddd<span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code></pre>
+</div>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kr">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'a'</span><span class="p">),</span>
+      <span class="nx">b</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'b'</span><span class="p">),</span>
+      <span class="nx">c</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'c'</span><span class="p">),</span>
+      <span class="nx">d</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'d'</span><span class="p">);</span>
+
+<span class="nx">a</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">'click'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'target : '</span> <span class="o">+</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">id</span> <span class="o">+</span> <span class="s1">' --- currentTarget : '</span> <span class="o">+</span> <span class="nx">event</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">currentTarget</span> <span class="o">===</span> <span class="k">this</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="nx">b</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">'click'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'target : '</span> <span class="o">+</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">id</span> <span class="o">+</span> <span class="s1">' --- currentTarget : '</span> <span class="o">+</span> <span class="nx">event</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">currentTarget</span> <span class="o">===</span> <span class="k">this</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="nx">c</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">'click'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'target : '</span> <span class="o">+</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">id</span> <span class="o">+</span> <span class="s1">' - currentTarget : '</span> <span class="o">+</span> <span class="nx">event</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">currentTarget</span> <span class="o">===</span> <span class="k">this</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="nx">d</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">'click'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'target : '</span> <span class="o">+</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">id</span> <span class="o">+</span> <span class="s1">' - currentTarget : '</span> <span class="o">+</span> <span class="nx">event</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">currentTarget</span> <span class="o">===</span> <span class="k">this</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre>
+</div>
+
+<p>当点击 <code class="highlighter-rouge">div#d</code> 的时候，</p>
+
+<p>输出结果：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>target : d - currentTarget : d
+true
+target : d - currentTarget : c
+true
+target : d - currentTarget : b
+true
+target : d - currentTarget : a
+true
+</code></pre>
+</div>
+
+<p>可以看到：
+<code class="highlighter-rouge">event.target</code> 是触发事件的 DOM 元素，而 <code class="highlighter-rouge">event.currentTarget</code> 则是事件绑定的 DOM 元素。</p>
+
+<p>另外，可以注意到在事件处理程序内部，对象 <code class="highlighter-rouge">this</code> 始终等于 <code class="highlighter-rouge">currentTarget</code> 的值。</p>
+
+<hr />
+
+<h2 id="2-eventpreventdefault-和-eventstoppropagation">2. <code class="highlighter-rouge">event.preventDefault()</code> 和 <code class="highlighter-rouge">event.stopPropagation()</code></h2>
+
+<ul>
+  <li><code class="highlighter-rouge">event.preventDefault()</code> 阻止元素发生默认行为</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;a</span> <span class="na">id=</span><span class="s">"abtn"</span> <span class="na">href=</span><span class="s">"https://www.baidu.com"</span><span class="nt">&gt;</span>点击跳转 baidu<span class="nt">&lt;/a&gt;</span>
+</code></pre>
+</div>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">'#abtn'</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">'click'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>  <span class="c1">// 现在就不能跳转了</span>
+<span class="p">});</span>
+</code></pre>
+</div>
+
+<p>但是，如果元素的 <code class="highlighter-rouge">cancelable</code> 属性是 <code class="highlighter-rouge">false</code> ，那么也就没有默认动作。那么调用这个方法没有作用。</p>
+
+<ul>
+  <li><code class="highlighter-rouge">event.stopPropagation()</code> 阻止当前事件在 DOM 树的冒泡  (propagation: 波及，广传，繁殖)</li>
+</ul>
+
+<p>根据 DOM 事件流机制，在元素上触发的大多数事件都会冒泡传递到该元素的所有祖先元素上。如果这些祖先元素上也绑定了相应的事件传递函数，那么就会触发执行这些函数。
+而 <code class="highlighter-rouge">stopPropagation()</code> 可以阻止当前事件向祖先元素冒泡传递。</p>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"a"</span><span class="nt">&gt;</span>aaaaaaaaa
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"b"</span><span class="nt">&gt;</span>bbbbbbbbbb<span class="nt">&lt;/div&gt;</span>
+<span class="err">&lt;</span>/div
+</code></pre>
+</div>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kr">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'a'</span><span class="p">),</span>
+      <span class="nx">b</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'b'</span><span class="p">);</span>
+<span class="nx">a</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">'click'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'aaaaaa'</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="nx">b</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">'click'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'bbbbbb'</span><span class="p">);</span>
+  <span class="nx">event</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">();</span>
+<span class="p">});</span>
+</code></pre>
+</div>
+
+<p>这样，停止事件冒泡，就会阻止 <code class="highlighter-rouge">a</code> 事件的发生。</p>
+
+<hr />
+
+<p>拓展阅读：<a href="https://developer.mozilla.org/en-US/docs/Web/API/Event">Event_MDN</a></p>
+
+  </div>
+</article>
+
+
+
+
+<nav>
+  <ul class="pager">
+    
+    <li class="previous">
+      <a rel="prev" href="/javascript/%E6%9F%A5%E6%89%BE%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E5%87%BA%E7%8E%B0%E6%AC%A1%E6%95%B0%E6%9C%80%E5%A4%9A%E7%9A%84%E5%AD%97%E7%AC%A6.html"
+        title="查找字符串中出现次数最多的字符">&laquo; 前一篇</a>
+    </li>
+    
+
+    
+    <li class="next">
+      <a rel="next" href="/javascript/es6/ES6-%E5%9D%97%E7%BA%A7%E7%BB%91%E5%AE%9A.html"
+        title="ES6 块级绑定">后一篇 &raquo;</a>
+    </li>
+    
+  </ul>
+</nav>
+<div id="disqus_thread"></div>
+
+<script>
+var disqus_config = function () {
+this.page.url = 'http://localhost:4000/javascript/%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1.html';
+this.page.identifier = '/javascript/事件对象';
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://www-hiiamtim-com-2.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+
+      <div class="sidebar col-lg-3 col-md-4 col-sm-12 col-xs-12">
+        <aside class="about">
+  <h3 class="aside-title">关于</h3>
+  <div class="aside-content">
+    <p>在路上</p>
+  </div>
+</aside>
+
+<aside class="categories_list">
+  <h3 class="aside-title">分类</h3>
+  <div class="aside-content">
+    <ul><li><a href="/category/javascript/" title="JavaScript">JavaScript</a> (5)</li><li><a href="/category/es6/" title="ES6">ES6</a> (3)</li></ul>
+  </div>
+</aside>
+
+<!--<aside class="subscribe">
+  <h3 class="aside-title">订阅</h3>
+  <div class="aside-content">
+    <p>&nbsp;<a href="/feed.xml"><i class="fa fa-rss fa-lg" aria-hidden="true"></i>&nbsp;RSS</a></p>
+  </div>
+</aside>-->
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer class="footer">
+      <p>&copy; 2017 Tim's Blog</p>
+      <p>Contact me at:
+        <a href="https://github.com/timleenights"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
+        or
+        <a href="mailto:timleenights@gmail.com"><i class="fa fa-envelope-o fa-2x" aria-hidden="true"></i></a>
+      </p>
+    </footer>
+  </body>
+</html>

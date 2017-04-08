@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Tim's Blog</title>
+  <link href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link href="/css/main.css" rel="stylesheet">
+  <link href="/css/syntax.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Tim's Blog</a>
+    </div>
+    <div class="collapse navbar-collapse" id="navbar-collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/"><i class="fa fa-home fa-fw" aria-hidden="true"></i>&nbsp;Home</a></li>
+        <li><a href="/collections/"><i class="fa fa-link fa-fw" aria-hidden="true"></i>&nbsp;Collections</a></li>
+        <li><a href="/demo/"><i class="fa fa-forward fa-fw" aria-hidden="true"></i>&nbsp;Demo</a></li>
+        <li><a href="/feed.xml"><i class="fa fa-rss fa-fw" aria-hidden="true"></i>&nbsp;RSS</a></li>
+        <li><a href="/about/"><i class="fa fa-user fa-fw" aria-hidden="true"></i>&nbsp;About</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+<div class="content">
+  <div class="container">
+    <div class="row">
+      <div class="main col-lg-9 col-md-8 col-sm-12 col-xs-12">
+        
+
+<article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a href="/javascript/%E6%9F%A5%E6%89%BE%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E5%87%BA%E7%8E%B0%E6%AC%A1%E6%95%B0%E6%9C%80%E5%A4%9A%E7%9A%84%E5%AD%97%E7%AC%A6.html">查找字符串中出现次数最多的字符</a></h1>
+    <p class="post-meta">2017年2月27日 <a href="/category/javascript/" title="JavaScript">JavaScript</a></p>
+  </header>
+
+  <div class="post-content">
+    <h2 id="第-1-种方法">第 1 种方法</h2>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nb">String</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">getMostString</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">maximumTime</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="nx">maximumString</span><span class="p">;</span>
+
+  <span class="k">while</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">tempString</span> <span class="o">=</span> <span class="nx">str</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">tempStr</span> <span class="o">=</span> <span class="nx">str</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="nx">tempString</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">tempTime</span> <span class="o">=</span> <span class="nx">str</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="p">(</span><span class="nx">str</span> <span class="o">=</span> <span class="nx">tempStr</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">''</span><span class="p">)).</span><span class="nx">length</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">tempTime</span> <span class="o">&gt;</span> <span class="nx">maximumTime</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">maximumTime</span> <span class="o">=</span> <span class="nx">tempTime</span><span class="p">;</span>
+      <span class="nx">maximumString</span> <span class="o">=</span> <span class="nx">tempString</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="p">{</span><span class="s1">'maximumString'</span><span class="p">:</span> <span class="nx">maximumString</span><span class="p">,</span> <span class="s1">'maximumTime'</span><span class="p">:</span> <span class="nx">maximumTime</span><span class="p">};</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h2 id="第-2-种方法">第 2 种方法</h2>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nb">String</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">getMostString</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{},</span>
+      <span class="nx">maximumTime</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="nx">maximumString</span><span class="p">;</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">str</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="kr">char</span> <span class="o">=</span> <span class="nx">str</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">obj</span><span class="p">[</span><span class="kr">char</span><span class="p">])</span> <span class="p">{</span>
+      <span class="nx">obj</span><span class="p">[</span><span class="kr">char</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="nx">obj</span><span class="p">[</span><span class="kr">char</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[];</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">arr</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">obj</span><span class="p">[</span><span class="nx">key</span><span class="p">]);</span>
+  <span class="p">};</span>
+  <span class="kd">var</span> <span class="nx">maximumTime</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">arr</span><span class="p">);</span>
+
+  <span class="c1">// ES6 的方法</span>
+  <span class="c1">// let arr = Object.values(obj);</span>
+  <span class="c1">// let maximumTime = Math.max(...arr);</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">obj</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">===</span> <span class="nx">maximumTime</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="p">{</span><span class="s1">'maximumString'</span><span class="p">:</span> <span class="nx">key</span><span class="p">,</span> <span class="s1">'maximumTime'</span><span class="p">:</span> <span class="nx">maximumTime</span><span class="p">};</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h2 id="第-3-种方法">第 3 种方法</h2>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nb">String</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">getMostString</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{},</span>
+      <span class="nx">maximumTime</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="nx">maximumString</span><span class="p">;</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">str</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="kr">char</span> <span class="o">=</span> <span class="nx">str</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">obj</span><span class="p">[</span><span class="kr">char</span><span class="p">])</span> <span class="p">{</span>
+      <span class="nx">obj</span><span class="p">[</span><span class="kr">char</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="nx">obj</span><span class="p">[</span><span class="kr">char</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="c1">// var maximumTime = Math.max.apply(null, Object.values(obj));</span>
+  <span class="c1">// 或者：</span>
+  <span class="kd">var</span> <span class="nx">maximumTime</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(...</span><span class="nb">Object</span><span class="p">.</span><span class="nx">values</span><span class="p">(</span><span class="nx">obj</span><span class="p">));</span>
+
+  <span class="kd">var</span> <span class="nx">maximumString</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">obj</span><span class="p">).</span><span class="nx">reduce</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">obj</span><span class="p">[</span><span class="nx">a</span><span class="p">]</span> <span class="o">&gt;</span> <span class="nx">obj</span><span class="p">[</span><span class="nx">b</span><span class="p">]</span> <span class="p">?</span> <span class="nx">a</span> <span class="p">:</span> <span class="nx">b</span><span class="p">;</span>
+  <span class="p">})</span>
+
+  <span class="k">return</span> <span class="p">{</span><span class="s1">'maximumString'</span><span class="p">:</span> <span class="nx">maximumString</span><span class="p">,</span> <span class="s1">'maximumTime'</span><span class="p">:</span> <span class="nx">maximumTime</span><span class="p">};</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+  </div>
+</article>
+
+
+
+
+<nav>
+  <ul class="pager">
+    
+
+    
+    <li class="next">
+      <a rel="next" href="/javascript/%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1.html"
+        title="事件对象">后一篇 &raquo;</a>
+    </li>
+    
+  </ul>
+</nav>
+<div id="disqus_thread"></div>
+
+<script>
+var disqus_config = function () {
+this.page.url = 'http://localhost:4000/javascript/%E6%9F%A5%E6%89%BE%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E5%87%BA%E7%8E%B0%E6%AC%A1%E6%95%B0%E6%9C%80%E5%A4%9A%E7%9A%84%E5%AD%97%E7%AC%A6.html';
+this.page.identifier = '/javascript/查找字符串中出现次数最多的字符';
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://www-hiiamtim-com-2.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+
+      <div class="sidebar col-lg-3 col-md-4 col-sm-12 col-xs-12">
+        <aside class="about">
+  <h3 class="aside-title">关于</h3>
+  <div class="aside-content">
+    <p>在路上</p>
+  </div>
+</aside>
+
+<aside class="categories_list">
+  <h3 class="aside-title">分类</h3>
+  <div class="aside-content">
+    <ul><li><a href="/category/javascript/" title="JavaScript">JavaScript</a> (5)</li><li><a href="/category/es6/" title="ES6">ES6</a> (3)</li></ul>
+  </div>
+</aside>
+
+<!--<aside class="subscribe">
+  <h3 class="aside-title">订阅</h3>
+  <div class="aside-content">
+    <p>&nbsp;<a href="/feed.xml"><i class="fa fa-rss fa-lg" aria-hidden="true"></i>&nbsp;RSS</a></p>
+  </div>
+</aside>-->
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer class="footer">
+      <p>&copy; 2017 Tim's Blog</p>
+      <p>Contact me at:
+        <a href="https://github.com/timleenights"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
+        or
+        <a href="mailto:timleenights@gmail.com"><i class="fa fa-envelope-o fa-2x" aria-hidden="true"></i></a>
+      </p>
+    </footer>
+  </body>
+</html>

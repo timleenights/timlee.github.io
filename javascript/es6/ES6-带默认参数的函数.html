@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Tim's Blog</title>
+  <link href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link href="/css/main.css" rel="stylesheet">
+  <link href="/css/syntax.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Tim's Blog</a>
+    </div>
+    <div class="collapse navbar-collapse" id="navbar-collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/"><i class="fa fa-home fa-fw" aria-hidden="true"></i>&nbsp;Home</a></li>
+        <li><a href="/collections/"><i class="fa fa-link fa-fw" aria-hidden="true"></i>&nbsp;Collections</a></li>
+        <li><a href="/demo/"><i class="fa fa-forward fa-fw" aria-hidden="true"></i>&nbsp;Demo</a></li>
+        <li><a href="/feed.xml"><i class="fa fa-rss fa-fw" aria-hidden="true"></i>&nbsp;RSS</a></li>
+        <li><a href="/about/"><i class="fa fa-user fa-fw" aria-hidden="true"></i>&nbsp;About</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+<div class="content">
+  <div class="container">
+    <div class="row">
+      <div class="main col-lg-9 col-md-8 col-sm-12 col-xs-12">
+        
+
+<article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a href="/javascript/es6/ES6-%E5%B8%A6%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%BD%E6%95%B0.html">ES6 带默认参数的函数</a></h1>
+    <p class="post-meta">2017年3月28日 <a href="/category/javascript/" title="JavaScript">JavaScript</a>, <a href="/category/es6/" title="ES6">ES6</a></p>
+  </header>
+
+  <div class="post-content">
+    <p>JavaScript 的函数比较特殊的是可以接受任意个数的参数，完全无视函数声明中的参数个数。</p>
+
+<h3 id="es5-默认参数模拟">ES5 默认参数模拟</h3>
+
+<p>在 ES5 或更早的版本中，可以通过以下方式来给参数添加默认值</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">makeRequest</span> <span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">timeout</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">timeout</span> <span class="o">=</span> <span class="nx">timeout</span> <span class="o">||</span> <span class="mi">2000</span><span class="p">;</span>
+  <span class="nx">callback</span> <span class="o">=</span> <span class="nx">callback</span> <span class="o">||</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{};</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>上面的方法有个缺点，如果给 <code class="highlighter-rouge">timeout</code> 传入的值是 0 ，那么 <code class="highlighter-rouge">timeout</code> 的值会被替换为 2000，因为 0 视为假。</p>
+
+<hr />
+
+<p>下面的例子会对参数进行类型检查</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">makeRequest</span> <span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">timeout</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">timeout</span> <span class="o">=</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">timeout</span> <span class="o">!==</span> <span class="s1">'undefined'</span><span class="p">)</span> <span class="p">?</span> <span class="nx">timeout</span> <span class="p">:</span> <span class="mi">2000</span><span class="p">;</span>
+  <span class="nx">callback</span> <span class="o">=</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">callback</span> <span class="o">!==</span> <span class="s1">'undefined'</span><span class="p">)</span> <span class="p">?</span> <span class="nx">callback</span> <span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{};</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h3 id="es6-中的默认参数">ES6 中的默认参数</h3>
+
+<p>ES6 中函数参数能更方便地获取默认值，当未传入实参给形参时，形参的默认值会被使用</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">makeRequest</span> <span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">timeout</span> <span class="o">=</span> <span class="mi">2000</span><span class="p">,</span> <span class="nx">callback</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{})</span> <span class="p">{</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>该函数只期待传入一个参数，其余 2 个参数有各自的默认值。这使得函数体更加小巧。因为不再需要添加额外的代码来检查是否有遗漏的参数值。</p>
+
+<p>如果使用 3 个参数来调用 <code class="highlighter-rouge">makeRequest()</code> ，那么所有的默认值都不会被使用。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">makeRequest</span><span class="p">(</span><span class="s1">'/foo'</span><span class="p">);</span>  <span class="c1">// timeout 和 callback 使用默认值</span>
+<span class="nx">makeRequest</span><span class="p">(</span><span class="s1">'/foo'</span><span class="p">,</span> <span class="mi">500</span><span class="p">);</span>  <span class="c1">// callback 使用默认值</span>
+<span class="nx">makeRequest</span><span class="p">(</span><span class="s1">'/foo'</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">body</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// 没有使用任何默认值</span>
+  <span class="nx">doSomething</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre>
+</div>
+
+<p>ES6 认为 <code class="highlighter-rouge">url</code> 参数是必须传入的，这就是 3 次调用都传入 <code class="highlighter-rouge">/foo</code> 的原因。其余 2 个参数被视为是可选的。</p>
+
+<hr />
+
+<p>另外，也可以任意指定其中一个函数参数的默认值，如果之后的参数未设定默认值也是可以的。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">makeRequest</span> <span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">timeout</span> <span class="o">=</span> <span class="mi">2000</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">timeout</code> 的默认值只在未提供默认值或者传入 <code class="highlighter-rouge">undefined</code> 的情况下才会被使用</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">makeRequest</span><span class="p">(</span><span class="s1">'/foo'</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">body</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// 使用 timeout 的默认值</span>
+  <span class="nx">doSomething</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="nx">makeRquest</span><span class="p">(</span><span class="s1">'/foo'</span><span class="p">);</span>  <span class="c1">// 使用 timeout 的默认值</span>
+
+<span class="nx">makeRequest</span><span class="p">(</span><span class="s1">'/foo'</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">body</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// 使用 null</span>
+  <span class="nx">doSomething</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre>
+</div>
+
+<p>在提供 <code class="highlighter-rouge">null</code> 作为参数值的时候是有效的。</p>
+
+<h3 id="默认参数对-arguments-对象的影响">默认参数对 arguments 对象的影响</h3>
+
+<p>需要记住的是当使用默认参数的时候，<code class="highlighter-rouge">arguments</code> 对象的表现是不同的。</p>
+
+<p>在 ES5 的非严格模式中，<code class="highlighter-rouge">arguments</code> 对象会反映出所有被命名的参数的变化。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">mixArgs</span> <span class="p">(</span><span class="nx">first</span><span class="p">,</span> <span class="nx">second</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">first</span> <span class="o">===</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>  <span class="c1">// true</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">second</span> <span class="o">===</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>  <span class="c1">// true</span>
+  <span class="nx">first</span> <span class="o">=</span> <span class="s1">'c'</span><span class="p">;</span>
+  <span class="nx">second</span> <span class="o">=</span> <span class="s1">'d'</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">first</span> <span class="o">===</span> <span class="nx">arguemnts</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>  <span class="c1">// true</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">second</span> <span class="o">===</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>  <span class="c1">// true</span>
+<span class="p">}</span>
+
+<span class="nx">mixArgs</span><span class="p">(</span><span class="s1">'a'</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<p>可以看到，<code class="highlighter-rouge">arguments</code> 对象在非严格模式下是实时更新命名参数的变化。</p>
+
+<p>但是，在 ES5 的<strong>严格模式</strong>下，这个机制被取消了。<code class="highlighter-rouge">arguments</code> 对象不会反映任何命名参数。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">mixArgs</span> <span class="p">(</span><span class="nx">first</span><span class="p">,</span> <span class="nx">second</span><span class="p">)</span> <span class="p">{</span>
+  <span class="s2">"use strict"</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">first</span> <span class="o">===</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>  <span class="c1">// true</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">second</span> <span class="o">===</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>  <span class="c1">// true</span>
+  <span class="nx">first</span> <span class="o">=</span> <span class="s1">'c'</span><span class="p">;</span>
+  <span class="nx">second</span> <span class="o">=</span> <span class="s1">'d'</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">first</span> <span class="o">===</span> <span class="nx">arguemnts</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>  <span class="c1">// false</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">second</span> <span class="o">===</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>  <span class="c1">// false</span>
+<span class="p">}</span>
+
+<span class="nx">mixArgs</span><span class="p">(</span><span class="s1">'a'</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<p>上面的 <code class="highlighter-rouge">first</code> 和 <code class="highlighter-rouge">second</code> 的更新不会映射到 <code class="highlighter-rouge">arguments</code> 内。</p>
+
+<hr />
+
+<p>当使用 ES6 的默认参数时，<code class="highlighter-rouge">arguments</code> 对象的表现和 ES5 的严格模式一致 (不管是否设定为严格模式)。</p>
+
+<p>默认参数的存在会使 <code class="highlighter-rouge">arguments</code> 对象对该命名参数解绑。</p>
+
+<p>这是个很重要的细节！因为 <code class="highlighter-rouge">arguments</code> 对象的使用方式发生了变化。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="c1">// 非严格模式</span>
+<span class="kd">function</span> <span class="nx">mixArgs</span> <span class="p">(</span><span class="nx">first</span><span class="p">,</span> <span class="nx">second</span> <span class="o">=</span> <span class="s1">'b'</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>  <span class="c1">// 1</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">first</span> <span class="o">===</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>  <span class="c1">// true</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">second</span> <span class="o">===</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>  <span class="c1">// false</span>
+  <span class="nx">first</span> <span class="o">=</span> <span class="s1">'c'</span><span class="p">;</span>
+  <span class="nx">second</span> <span class="o">=</span> <span class="s1">'d'</span><span class="p">;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">first</span> <span class="o">===</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>  <span class="c1">// false</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">second</span> <span class="o">===</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>  <span class="c1">// false</span>
+<span class="p">}</span>
+
+<span class="nx">mixArgs</span><span class="p">(</span><span class="s1">'a'</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">arguments.length</code> 为 1 是因为只给 <code class="highlighter-rouge">mixArgs()</code> 只提供了一个参数。</p>
+
+<p>这说明 <code class="highlighter-rouge">arguments[1]</code> 的值是 <code class="highlighter-rouge">undefined</code>，同时 <code class="highlighter-rouge">first</code> 等于 <code class="highlighter-rouge">arguments[0]</code>。</p>
+
+<p>改变 <code class="highlighter-rouge">first</code> 和 <code class="highlighter-rouge">second</code> 的值不会对 <code class="highlighter-rouge">arguments</code> 造成任何效果，不论是在严格模式还是在非严格模式。</p>
+
+<p>所以，<code class="highlighter-rouge">arguments</code> 总是反映出函数的首次调用状态。</p>
+
+<hr />
+
+<h3 id="默认参数表达式">默认参数表达式</h3>
+
+<p>默认参数其中一个特性就是传给它的不一定是原始值。例如，你可以执行一个函数并把返回值作为参数。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">getValue</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="mi">10</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">add</span> <span class="p">(</span><span class="nx">first</span><span class="p">,</span> <span class="nx">second</span> <span class="o">=</span> <span class="nx">getValue</span><span class="p">())</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">first</span> <span class="o">+</span> <span class="nx">second</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>  <span class="c1">// 2</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>  <span class="c1">// 11</span>
+</code></pre>
+</div>
+
+<p>这里，需要注意的是，<code class="highlighter-rouge">getValue()</code> 只会在未提供实参给 <code class="highlighter-rouge">second</code> 的情况下才会被调用。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">value</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">getValue</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">value</span><span class="o">++</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">add</span> <span class="p">(</span><span class="nx">first</span><span class="p">,</span> <span class="nx">second</span> <span class="o">=</span> <span class="nx">getValue</span><span class="p">())</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">first</span> <span class="o">+</span> <span class="nx">second</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>  <span class="c1">// 2</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>  <span class="c1">// 6</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>  <span class="c1">// 7</span>
+</code></pre>
+</div>
+
+<p>在这个例子中，<code class="highlighter-rouge">value</code> 的初始值是 5 并随着每次 <code class="highlighter-rouge">getValue()</code> 的调用而递增。</p>
+
+<p>首次调用 <code class="highlighter-rouge">add(1)</code> 返回的值是 6，再次调用则返回 7，因为 <code class="highlighter-rouge">value</code> 的值已经增加了。
+由于 <code class="highlighter-rouge">second</code> 的默认值总是在当前 <code class="highlighter-rouge">add</code> 函数被调用的情况下才被计算，所以 <code class="highlighter-rouge">value</code> 的值可以随时被改变。</p>
+
+<p>使用函数调用作为默认值的时候需要注意，如果你忘了在函数名后面添加括号，例如如果把上例中的 <code class="highlighter-rouge">second = getValue()</code> 写成 <code class="highlighter-rouge">second = getValue</code>，
+那么，你传入的是一个函数引用而不是函数调用后返回的值。</p>
+
+<p>另外，如果把前面的参数作为后面的默认值。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">add</span> <span class="p">(</span><span class="nx">first</span><span class="p">,</span> <span class="nx">second</span> <span class="o">=</span> <span class="nx">first</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">first</span> <span class="o">+</span> <span class="nx">second</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>  <span class="c1">// 2</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>  <span class="c1">// 2</span>
+</code></pre>
+</div>
+
+<p>把 <code class="highlighter-rouge">first</code> 作为默认值提供给 <code class="highlighter-rouge">second</code> 参数，这意味着只传入一个参数时，2 个参数获得了相同的值。</p>
+
+<p>再进一步，你可以把 <code class="highlighter-rouge">first</code> 作为参数传给另一个函数以便计算返回值传给 <code class="highlighter-rouge">second</code></p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">getValue</span> <span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">value</span> <span class="o">+</span> <span class="mi">5</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">add</span> <span class="p">(</span><span class="nx">first</span><span class="p">,</span> <span class="nx">second</span> <span class="o">=</span> <span class="nx">getValue</span><span class="p">(</span><span class="nx">first</span><span class="p">))</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">first</span> <span class="o">+</span> <span class="nx">second</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>  <span class="c1">// 2</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>  <span class="c1">// 7</span>
+</code></pre>
+</div>
+
+<hr />
+
+<p>另外，默认参数引用其他参数的场景只发生在引用之前的参数，即前面的参数不能访问后面的参数。例如：</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">add</span> <span class="p">(</span><span class="nx">first</span> <span class="o">=</span> <span class="nx">second</span><span class="p">,</span> <span class="nx">second</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">first</span> <span class="o">+</span> <span class="nx">second</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>  <span class="c1">// 2</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="kc">undefined</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>  <span class="c1">// 抛出错误</span>
+</code></pre>
+</div>
+
+<p>调用 <code class="highlighter-rouge">add(undefined, 1)</code> 发生错误是因为 <code class="highlighter-rouge">second</code> 是在 <code class="highlighter-rouge">first</code> 之后定义，所以 <code class="highlighter-rouge">first</code> 无法访问 <code class="highlighter-rouge">second</code> 的值。</p>
+
+<p>要想知道缘由，就要重温一重要概念：暂存性死区。</p>
+
+<hr />
+
+<h3 id="默认参数的暂存性死区">默认参数的暂存性死区</h3>
+
+<p>和 <code class="highlighter-rouge">let</code> 声明类似，每个参数都创建了一个新的绑定，但是在它们被初始化之前访问会抛出错误。
+初始化的方式是通过在函数被调用的时候传递参数或者使用默认参数。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">getValue</span> <span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">value</span> <span class="o">+</span> <span class="mi">5</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">add</span> <span class="p">(</span><span class="nx">first</span><span class="p">,</span> <span class="nx">second</span> <span class="o">=</span> <span class="nx">getValue</span><span class="p">(</span><span class="nx">first</span><span class="p">))</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">first</span> <span class="o">+</span> <span class="nx">second</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>  <span class="c1">// 2</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>  <span class="c1">// 7</span>
+</code></pre>
+</div>
+
+<p>调用 <code class="highlighter-rouge">add(1, 1)</code> 和 <code class="highlighter-rouge">add(1)</code> 事实上执行了以下语句以创建 <code class="highlighter-rouge">first</code> 和 <code class="highlighter-rouge">second</code> 参数和赋值：</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="c1">// 调用 add(1, 1)</span>
+<span class="kd">let</span> <span class="nx">first</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">second</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+<span class="c1">// 调用 add(1)</span>
+<span class="kd">let</span> <span class="nx">first</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">second</span> <span class="o">=</span> <span class="nx">getValue</span><span class="p">(</span><span class="nx">first</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<p>当函数 <code class="highlighter-rouge">add()</code> 执行时，<code class="highlighter-rouge">first</code> 和 <code class="highlighter-rouge">second</code> 的绑定被移入了特定的参数 TDZ (类似 <code class="highlighter-rouge">let</code>)。
+之所以 <code class="highlighter-rouge">second</code> 可以被 <code class="highlighter-rouge">first</code> 初始化是因为 <code class="highlighter-rouge">first</code> 的初始化在前，反之则不能。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">add</span> <span class="p">(</span><span class="nx">first</span> <span class="o">=</span> <span class="nx">second</span><span class="p">,</span> <span class="nx">second</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">first</span> <span class="o">+</span> <span class="nx">second</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>  <span class="c1">// 2</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="kc">undefined</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>  <span class="c1">// 抛出错误</span>
+</code></pre>
+</div>
+
+<p>在这个例子中，调用 <code class="highlighter-rouge">add(1, 1)</code> 和 <code class="highlighter-rouge">add(undefined, 1)</code> 实际上做了以下工作：</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="c1">// 调用 add(1, 1)</span>
+<span class="kd">let</span> <span class="nx">first</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">second</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+<span class="c1">// 调用 add(undefined, 1)</span>
+<span class="kd">let</span> <span class="nx">first</span> <span class="o">=</span> <span class="nx">second</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">second</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<p>调用 <code class="highlighter-rouge">add(undefined, 1)</code> 时出现错误是因为在 <code class="highlighter-rouge">let first = second</code> 的时候，<code class="highlighter-rouge">second</code> 还没初始化。
+这个时候，<code class="highlighter-rouge">second</code> 仍在 TDZ 中，所以访问它会出错。这些与之前提到过的 <code class="highlighter-rouge">let</code> 绑定十分相似。</p>
+
+<hr />
+
+<p>总结：函数参数相比函数内部有着自己的作用域和 TDZ，这意味着参数的默认值不能使用函数内部声明的任何变量。</p>
+
+  </div>
+</article>
+
+
+
+
+<nav>
+  <ul class="pager">
+    
+    <li class="previous">
+      <a rel="prev" href="/javascript/es6/ES6-%E5%9D%97%E7%BA%A7%E7%BB%91%E5%AE%9A.html"
+        title="ES6 块级绑定">&laquo; 前一篇</a>
+    </li>
+    
+
+    
+    <li class="next">
+      <a rel="next" href="/javascript/es6/ES6-%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0.html"
+        title="ES6 箭头函数">后一篇 &raquo;</a>
+    </li>
+    
+  </ul>
+</nav>
+<div id="disqus_thread"></div>
+
+<script>
+var disqus_config = function () {
+this.page.url = 'http://localhost:4000/javascript/es6/ES6-%E5%B8%A6%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%BD%E6%95%B0.html';
+this.page.identifier = '/javascript/es6/ES6-带默认参数的函数';
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://www-hiiamtim-com-2.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+
+      <div class="sidebar col-lg-3 col-md-4 col-sm-12 col-xs-12">
+        <aside class="about">
+  <h3 class="aside-title">关于</h3>
+  <div class="aside-content">
+    <p>在路上</p>
+  </div>
+</aside>
+
+<aside class="categories_list">
+  <h3 class="aside-title">分类</h3>
+  <div class="aside-content">
+    <ul><li><a href="/category/javascript/" title="JavaScript">JavaScript</a> (5)</li><li><a href="/category/es6/" title="ES6">ES6</a> (3)</li></ul>
+  </div>
+</aside>
+
+<!--<aside class="subscribe">
+  <h3 class="aside-title">订阅</h3>
+  <div class="aside-content">
+    <p>&nbsp;<a href="/feed.xml"><i class="fa fa-rss fa-lg" aria-hidden="true"></i>&nbsp;RSS</a></p>
+  </div>
+</aside>-->
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer class="footer">
+      <p>&copy; 2017 Tim's Blog</p>
+      <p>Contact me at:
+        <a href="https://github.com/timleenights"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
+        or
+        <a href="mailto:timleenights@gmail.com"><i class="fa fa-envelope-o fa-2x" aria-hidden="true"></i></a>
+      </p>
+    </footer>
+  </body>
+</html>

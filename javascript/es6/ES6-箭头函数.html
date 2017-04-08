@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Tim's Blog</title>
+  <link href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link href="/css/main.css" rel="stylesheet">
+  <link href="/css/syntax.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Tim's Blog</a>
+    </div>
+    <div class="collapse navbar-collapse" id="navbar-collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/"><i class="fa fa-home fa-fw" aria-hidden="true"></i>&nbsp;Home</a></li>
+        <li><a href="/collections/"><i class="fa fa-link fa-fw" aria-hidden="true"></i>&nbsp;Collections</a></li>
+        <li><a href="/demo/"><i class="fa fa-forward fa-fw" aria-hidden="true"></i>&nbsp;Demo</a></li>
+        <li><a href="/feed.xml"><i class="fa fa-rss fa-fw" aria-hidden="true"></i>&nbsp;RSS</a></li>
+        <li><a href="/about/"><i class="fa fa-user fa-fw" aria-hidden="true"></i>&nbsp;About</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+<div class="content">
+  <div class="container">
+    <div class="row">
+      <div class="main col-lg-9 col-md-8 col-sm-12 col-xs-12">
+        
+
+<article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a href="/javascript/es6/ES6-%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0.html">ES6 箭头函数</a></h1>
+    <p class="post-meta">2017年3月29日 <a href="/category/javascript/" title="JavaScript">JavaScript</a>, <a href="/category/es6/" title="ES6">ES6</a></p>
+  </header>
+
+  <div class="post-content">
+    <h3 id="箭头函数简单概述">箭头函数简单概述</h3>
+
+<p>ES6 引入了一种全新的声明函数的方法：箭头函数 (Arrow Functions)。</p>
+
+<p>箭头函数主要在以下几个部分不同于传统的 JavaScript 函数：</p>
+
+<ul>
+  <li>
+    <p>没有 <code class="highlighter-rouge">this</code>、<code class="highlighter-rouge">super</code>、<code class="highlighter-rouge">arguments</code> 和 <code class="highlighter-rouge">new.target</code> 绑定。<code class="highlighter-rouge">this</code>、<code class="highlighter-rouge">super</code>、<code class="highlighter-rouge">arguments</code> 和 <code class="highlighter-rouge">new.target</code> 的值由最近的不包含箭头函数的作用域决定</p>
+  </li>
+  <li>
+    <p>不能被 <code class="highlighter-rouge">new</code> 调用 - 箭头函数内部没有 [[Construct]] 方法，因此不能当做构造函数使用。</p>
+  </li>
+  <li>
+    <p>没有 <code class="highlighter-rouge">prototype</code> - 既然不能使用 <code class="highlighter-rouge">new</code> 调用箭头函数，那么 <code class="highlighter-rouge">prototype</code> 就没有存在的理由了。</p>
+  </li>
+  <li>
+    <p>不能更改 <code class="highlighter-rouge">this</code> - <code class="highlighter-rouge">this</code> 的值不能在函数内部修改。在函数的整个生命周期内，<code class="highlighter-rouge">this</code> 是不会变的。</p>
+  </li>
+  <li>
+    <p>没有 <code class="highlighter-rouge">arguments</code> 对象 - 既然箭头函数没有 <code class="highlighter-rouge">arguments</code> 绑定，那么只能靠命名或者剩余参数来访问函数参数了。</p>
+  </li>
+  <li>
+    <p>不允许重复命名参数 - 无论在非严格模式还是严格模式下，箭头函数都不允许重复的命名参数存在。(而在传统函数下，只有严格模式的时候才禁止这种行为)。</p>
+  </li>
+</ul>
+
+<p>为什么存在这种规定呢？</p>
+
+<p>首先，在 JavaScript 编程中 <code class="highlighter-rouge">this</code> 的绑定往往是错误的根源。
+其次，限制 <code class="highlighter-rouge">this</code> 可以让 JavaScript 引擎对一些操作进行优化。</p>
+
+<p>另外，其他方面上的差异也是为了减少错误发生的风险。</p>
+
+<hr />
+
+<p>语法：</p>
+
+<p>箭头函数的语法可以有多种变体。所有变体都是以参数开头，接着箭头，函数主体结尾。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">reflect</span> <span class="o">=</span> <span class="nx">value</span> <span class="o">=&gt;</span> <span class="nx">value</span><span class="p">;</span>
+
+<span class="c1">// 等同于：</span>
+
+<span class="kd">var</span> <span class="nx">reflect</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">value</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+
+<p>当箭头函数只有一个参数时，该参数可以直接使用而不需要额外的语法。接着则是箭头和表达式。(即使没有写 <code class="highlighter-rouge">return</code> 语句也可以返回该参数)</p>
+
+<p>下面的是传多个参数的写法：</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">sum</span> <span class="o">=</span> <span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">num1</span> <span class="o">+</span> <span class="nx">num2</span><span class="p">;</span>
+
+<span class="c1">// 等同于：</span>
+
+<span class="kd">var</span> <span class="nx">sum</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">num1</span> <span class="o">+</span> <span class="nx">num2</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre>
+</div>
+
+<p>没有参数的写法：</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">getName</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="s1">'LiLei'</span><span class="p">;</span>
+
+<span class="c1">// 等同于：</span>
+
+<span class="kd">var</span> <span class="nx">getName</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="s1">'LiLei'</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>函数主体有多条语句时 (用花括号包裹语句)：</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">sum</span> <span class="o">=</span> <span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">num1</span> <span class="o">+</span> <span class="nx">num2</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// 等同于：</span>
+
+<span class="kd">var</span> <span class="nx">sum</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">num1</span> <span class="o">+</span> <span class="nx">num2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>如果想创建空函数：</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">doNothing</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{};</span>
+
+<span class="c1">// 等同于：</span>
+
+<span class="kd">var</span> <span class="nx">doNothing</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{};</span>
+</code></pre>
+</div>
+
+<p>当不想用传统的函数主体方式返回一个对象字面量的时候：</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">getObj</span> <span class="o">=</span> <span class="nx">id</span> <span class="o">=&gt;</span> <span class="p">({</span> <span class="na">id</span><span class="p">:</span> <span class="nx">id</span><span class="p">,</span> <span class="na">name</span><span class="p">:</span> <span class="s1">'LiLei'</span> <span class="p">});</span>  <span class="c1">// 必须把对象放在括号中</span>
+
+<span class="c1">// 等同于：</span>
+
+<span class="kd">var</span> <span class="nx">getObj</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="na">id</span><span class="p">:</span> <span class="nx">id</span><span class="p">,</span>
+    <span class="na">name</span><span class="p">:</span> <span class="s1">'LiLei'</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>将对象字面量放在括号内说明了其并非是函数主体。</p>
+
+  </div>
+</article>
+
+
+
+
+<nav>
+  <ul class="pager">
+    
+    <li class="previous">
+      <a rel="prev" href="/javascript/es6/ES6-%E5%B8%A6%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%BD%E6%95%B0.html"
+        title="ES6 带默认参数的函数">&laquo; 前一篇</a>
+    </li>
+    
+
+    
+  </ul>
+</nav>
+<div id="disqus_thread"></div>
+
+<script>
+var disqus_config = function () {
+this.page.url = 'http://localhost:4000/javascript/es6/ES6-%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0.html';
+this.page.identifier = '/javascript/es6/ES6-箭头函数';
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://www-hiiamtim-com-2.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+
+      <div class="sidebar col-lg-3 col-md-4 col-sm-12 col-xs-12">
+        <aside class="about">
+  <h3 class="aside-title">关于</h3>
+  <div class="aside-content">
+    <p>在路上</p>
+  </div>
+</aside>
+
+<aside class="categories_list">
+  <h3 class="aside-title">分类</h3>
+  <div class="aside-content">
+    <ul><li><a href="/category/javascript/" title="JavaScript">JavaScript</a> (5)</li><li><a href="/category/es6/" title="ES6">ES6</a> (3)</li></ul>
+  </div>
+</aside>
+
+<!--<aside class="subscribe">
+  <h3 class="aside-title">订阅</h3>
+  <div class="aside-content">
+    <p>&nbsp;<a href="/feed.xml"><i class="fa fa-rss fa-lg" aria-hidden="true"></i>&nbsp;RSS</a></p>
+  </div>
+</aside>-->
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer class="footer">
+      <p>&copy; 2017 Tim's Blog</p>
+      <p>Contact me at:
+        <a href="https://github.com/timleenights"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
+        or
+        <a href="mailto:timleenights@gmail.com"><i class="fa fa-envelope-o fa-2x" aria-hidden="true"></i></a>
+      </p>
+    </footer>
+  </body>
+</html>

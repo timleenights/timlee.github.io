@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Tim's Blog</title>
+  <link href="http://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link href="/css/main.css" rel="stylesheet">
+  <link href="/css/syntax.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Tim's Blog</a>
+    </div>
+    <div class="collapse navbar-collapse" id="navbar-collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/"><i class="fa fa-home fa-fw" aria-hidden="true"></i>&nbsp;Home</a></li>
+        <li><a href="/collections/"><i class="fa fa-link fa-fw" aria-hidden="true"></i>&nbsp;Collections</a></li>
+        <li><a href="/demo/"><i class="fa fa-forward fa-fw" aria-hidden="true"></i>&nbsp;Demo</a></li>
+        <li><a href="/feed.xml"><i class="fa fa-rss fa-fw" aria-hidden="true"></i>&nbsp;RSS</a></li>
+        <li><a href="/about/"><i class="fa fa-user fa-fw" aria-hidden="true"></i>&nbsp;About</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+<div class="content">
+  <div class="container">
+    <div class="row">
+      <div class="main col-lg-9 col-md-8 col-sm-12 col-xs-12">
+        
+
+<article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a href="/javascript/es6/ES6-%E5%9D%97%E7%BA%A7%E7%BB%91%E5%AE%9A.html">ES6 块级绑定</a></h1>
+    <p class="post-meta">2017年3月27日 <a href="/category/javascript/" title="JavaScript">JavaScript</a>, <a href="/category/es6/" title="ES6">ES6</a></p>
+  </header>
+
+  <div class="post-content">
+    <p>JavaScript 中变量的创建方式取决于你如何声明它，ES6 提供了额外的选项方便你能自由地控制变量的作用范围。</p>
+
+<h3 id="var-声明与变量提升">var 声明与变量提升</h3>
+
+<p>使用 <code class="highlighter-rouge">var</code> 声明的变量，不论在何处都会被视为在函数级作用域内顶部的位置发生 (如果不包括在函数内则为全局作用域内)。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">getValue</span> <span class="p">(</span><span class="nx">condition</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">condition</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="s1">'blue'</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nx">value</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="c1">// value 在这里可以访问到，值为 undefined</span>
+    <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="c1">// 这里也可以访问到，值为 undefined</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h3 id="块级声明">块级声明</h3>
+
+<p>块级声明，指该声明的变量无法被代码块外部访问。块级作用域，又被称为词法作用域。可以在如下的条件下创建：</p>
+
+<ul>
+  <li>函数内部</li>
+  <li>在代码块 (即在 <code class="highlighter-rouge"><span class="p">{}</span></code> ) 内部</li>
+</ul>
+
+<h3 id="let-声明">let 声明</h3>
+
+<p><code class="highlighter-rouge">let</code> 声明的语法和 <code class="highlighter-rouge">var</code> 完全一样。区别是，变量的作用域会限制在当前的代码块中。</p>
+
+<p>另外，<code class="highlighter-rouge">let</code> 声明不会将变量提升到当前作用域的顶部，所以你或许应该把它们放到代码块的开头，这样，才能被代码块的其他部分访问到。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">getValue</span> <span class="p">(</span><span class="nx">condition</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">condition</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">value</span> <span class="o">=</span> <span class="s1">'blue'</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nx">value</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="c1">// 这里无法访问 value</span>
+    <span class="k">return</span> <span class="nx">value</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="c1">// 这里也无法访问 value</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h3 id="禁止重复声明">禁止重复声明</h3>
+
+<p>如果一个标识符在当前作用域内已经存在，那么再用 <code class="highlighter-rouge">let</code> 声明相同的标识符或抛出错误。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">count</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">count</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>  <span class="c1">// 语法错误  Uncaught SyntaxError: Identifier 'count' has already been declared</span>
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">let</code> 不会重新定义已经存在的标识符。但是，如果如果在当前包含的作用域内 <code class="highlighter-rouge">let</code> 声明了一个全新的变量，那么就不会有错误抛出。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">count</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">condition</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">count</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h3 id="const-声明">const 声明</h3>
+
+<p>在 ES6 中可以使用常量语法声明常量。一旦声明了，就意味着它们不能再次被赋值。</p>
+
+<p>所以，所有 <code class="highlighter-rouge">const</code> 声明的变量都必须在声明处初始化。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kr">const</span> <span class="nx">num1</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="kr">const</span> <span class="nx">num1</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>  <span class="c1">// Uncaught SyntaxError: Identifier 'num1' has already been declared</span>
+
+<span class="kr">const</span> <span class="nx">num2</span><span class="p">;</span>  <span class="c1">// Uncaught SyntaxError: Missing initializer in const declaration</span>
+<span class="c1">// 必须声明的时候初始化赋值</span>
+</code></pre>
+</div>
+
+<h3 id="const-声明-vs-let-声明">const 声明 VS let 声明</h3>
+
+<p><code class="highlighter-rouge">const</code> 和 <code class="highlighter-rouge">let</code> 都是块级声明，意味着执行流跳出声明所在的代码块后就没有办法再访问它们，同样 <code class="highlighter-rouge">const</code> 变量也不会被提升。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="nx">condition</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">num</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// 在代码块外面无法访问 num</span>
+</code></pre>
+</div>
+
+<p>另一处与 <code class="highlighter-rouge">let</code> 相同的地方是，<code class="highlighter-rouge">const</code> 也不能对已存在的标识符重复定义，不论该标识符由 <code class="highlighter-rouge">var</code> 还是 <code class="highlighter-rouge">let</code> 定义。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="s1">'hello'</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+
+<span class="c1">// 下面的语句都会报错</span>
+<span class="kr">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="s1">'world'</span><span class="p">;</span>
+<span class="kr">const</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<p>尽管 <code class="highlighter-rouge">const</code> 和 <code class="highlighter-rouge">let</code> 使用起来很相似，但是必须要记住它们的根本性差异：不管是在严格模式还是非严格模式，<code class="highlighter-rouge">const</code> 变量都不允许被重复复制。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kr">const</span> <span class="nx">num</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="nx">num</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>  <span class="c1">// Uncaught TypeError: Assignment to constant variable.</span>
+</code></pre>
+</div>
+
+<p>但是需要注意的是：<code class="highlighter-rouge">const</code> 变量的值如果是个对象，那么这个对象本身可以被修改。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kr">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">name</span><span class="p">:</span> <span class="s1">'LiLei'</span><span class="p">,</span>
+  <span class="na">age</span><span class="p">:</span> <span class="mi">12</span>
+<span class="p">};</span>
+<span class="nx">a</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+
+<span class="c1">// 但是如果改变了该对象的地址，这样就会报错</span>
+<span class="kr">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">name</span><span class="p">:</span> <span class="s1">'Tony'</span><span class="p">,</span>
+  <span class="na">age</span><span class="p">:</span> <span class="mi">11</span>
+<span class="p">}</span>  <span class="c1">// 报错 Uncaught SyntaxError: Identifier 'a' has already been declared</span>
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">const</code> 声明只是阻止变量和值的再次绑定而不是值的修改。这意味着 <code class="highlighter-rouge">const</code> 不能限制对于值的类型为对象的变量的修改</p>
+
+<h3 id="暂存性死区-the-temporal-dead-zone">暂存性死区 (The Temporal Dead Zone)</h3>
+
+<p><code class="highlighter-rouge">let</code> 和 <code class="highlighter-rouge">const</code> 声明的变量在声明之前不能被访问。如果执意这么做会出现错误，甚至是 <code class="highlighter-rouge">typeof</code> 这种安全调用 (safe operations) 也不被允许的：</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="nx">condition</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">num</span><span class="p">);</span>  <span class="c1">// Uncaught ReferenceError: num is not defined</span>
+  <span class="kd">let</span> <span class="nx">num</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>在这里，变量 num 由 let 声明并被初始化，但是由于该语句之前就跑出了错误，导致其从未被执行。</p>
+
+<p>这种现象的原因是该语句存在于暂存性死区内。</p>
+
+<p>当 JavaScript 引擎在作用域中寻找变量声明时，会将变量提升到函数/全局作用域的顶部 (var) 或是放入暂存性死区内部 (let 和 const)。</p>
+
+<p>任何试图访问暂存性死区内部变量的行为都会抛出运行时 (runtime) 错误。当执行流达到变量声明的位置时，变量才会移出暂存性死区，代表它们可以使用。</p>
+
+<p>由 <code class="highlighter-rouge">let</code> 和 <code class="highlighter-rouge">const</code> 声明的变量，如果你想在定义它们之前就使用，那么请记住以上准则。</p>
+
+<p>不过，你可以在代码块之外的地方对变量使用 <code class="highlighter-rouge">typeof</code> 操作符，但结果可能不是你想要的。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">num</span><span class="p">);</span>  <span class="c1">// undefined</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">condition</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">num</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<p>当对 num 变量使用 <code class="highlighter-rouge">typeof</code> 操作符时，它并没有处在暂存性死区内部，因为它的位置在变量声明位置的代码块之外。</p>
+
+<p>这意味着没有发生任何绑定，所以 <code class="highlighter-rouge">typeof</code> 仅返回  <code class="highlighter-rouge">undefined</code>。</p>
+
+<p>暂存性死区只是发生在块级绑定中独特的设定之一。另一个特殊设定是在循环中。</p>
+
+<p>注意：如果这里是 console.log(num) ，照样会报错。这里显示 undefined ，仅仅是因为 typeof 是 safe operations</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">a</span><span class="p">);</span>  <span class="c1">// undefined</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>  <span class="c1">// Uncaught ReferenceError: a is not defined</span>
+</code></pre>
+</div>
+
+<h3 id="循环中的块级绑定">循环中的块级绑定</h3>
+
+<p>获取开发者对于块级作用域有强烈需求的场景之一就是循环。因为他们不想让循环外部访问到内部的索引计数器。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>  <span class="c1">// 1, 2, 3, 4</span>
+<span class="p">}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'i : '</span><span class="p">,</span> <span class="nx">i</span><span class="p">);</span>  <span class="c1">// i : 5</span>
+</code></pre>
+</div>
+
+<p>循环外部仍然可以访问 <code class="highlighter-rouge">i</code></p>
+
+<p>但是，如果用 <code class="highlighter-rouge">let</code> 代替 <code class="highlighter-rouge">var</code></p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>  <span class="c1">// 1, 2, 3, 4</span>
+<span class="p">}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'i : '</span><span class="p">,</span> <span class="nx">i</span><span class="p">);</span>  <span class="c1">// Uncaught ReferenceError: i is not defined</span>
+</code></pre>
+</div>
+
+<p>所以，如果用 <code class="highlighter-rouge">let</code>，循环外部就不能访问到 <code class="highlighter-rouge">i</code></p>
+
+<h3 id="循环中的函数">循环中的函数</h3>
+
+<p>长久以来，<code class="highlighter-rouge">var</code> 声明的特性使得在循环中创建函数问题多多。因为循环中声明的变量在代码块外也可以被访问。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">funcs</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">funcs</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span> <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="nx">funcs</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">func</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">func</span><span class="p">();</span>  <span class="c1">// 输出 “10” 共 10 次</span>
+<span class="p">});</span>
+<span class="c1">// forEach() 方法对数组的每个元素执行一次提供的函数</span>
+</code></pre>
+</div>
+
+<p>你可能以为这段代码只是普通地输出 0 - 9 这 10 个数字，但事实上它会连续 10 次输出 “10”。这是因为每次迭代的过程中 <code class="highlighter-rouge">i</code> 是被共享的。</p>
+
+<p>这意味着循环中创建的函数都保持着对相同变量的引用。当循环结束后，<code class="highlighter-rouge">i</code> 的值为 10，于是当 <code class="highlighter-rouge">console.log(i)</code> 被调用后，该值会被输出。</p>
+
+<hr />
+
+<p>为了修正这个问题，可以在循环内部使用即时调用函数表达式 (IIFEs) 来迫使每次迭代时创建一份当前索引值的拷贝</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">funcs</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">funcs</span><span class="p">.</span><span class="nx">push</span><span class="p">((</span><span class="kd">function</span> <span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}(</span><span class="nx">i</span><span class="p">)));</span>
+<span class="p">}</span>
+
+<span class="nx">funcs</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">func</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">func</span><span class="p">();</span>  <span class="c1">// 0, 1, 2 ... 9</span>
+<span class="p">});</span>
+</code></pre>
+</div>
+
+<p>这种写法在循环内部使用了 IIFE，并将变量 <code class="highlighter-rouge">i</code> 的值传入 IIFE 以便拷贝索引值并存储起来。这里传入的索引值同样被当前的迭代所使用。</p>
+
+<p>所以，循环完毕后每次调用的输出值正如所期待那样。</p>
+
+<p>但是，用 <code class="highlighter-rouge">let</code> 和 <code class="highlighter-rouge">const</code> 的块级绑定可以对循环代码进行简化。</p>
+
+<h3 id="循环中的-let-声明">循环中的 let 声明</h3>
+
+<p><code class="highlighter-rouge">let</code> 声明，可以在每次迭代中，一个新的同名变量会被创建并初始化。这意味着你可以不使用 IIFE ，也可以达到同样的效果。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">funcs</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">funcs</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="nx">funcs</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">func</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">func</span><span class="p">();</span>
+<span class="p">});</span>
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">let</code> 声明使得每次迭代都会创建一个变量 <code class="highlighter-rouge">i</code>，所以循环内部创建的函数会获得各自的变量 <code class="highlighter-rouge">i</code> 的拷贝。</p>
+
+<p>每份拷贝都会在每次迭代的开始被创建并被赋值。这同样适用于 <code class="highlighter-rouge">for-in</code> 和 <code class="highlighter-rouge">for-of</code> 循环。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">funcs</span> <span class="o">=</span> <span class="p">[],</span>
+    <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="na">a</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="na">b</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="na">c</span><span class="p">:</span> <span class="kc">true</span>
+    <span class="p">};</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">funcs</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="nx">funcs</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">func</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">func</span><span class="p">();</span>
+<span class="p">});</span>
+</code></pre>
+</div>
+
+<p>顺便说一下，<code class="highlighter-rouge">let</code> 声明在上述循环内的表现是在规范中特别定义的，和 “非变量提升“ 这一特性没有直接关系。</p>
+
+<h3 id="循环中的-const-声明">循环中的 const 声明</h3>
+
+<p>首先，ES6 中并没有明确禁止在循环中使用 <code class="highlighter-rouge">const</code> 声明。</p>
+
+<p>对于普通的 <code class="highlighter-rouge">for</code> 循环你可以初始化语句里使用 <code class="highlighter-rouge">const</code> 声明，但当你想要修改该声明变量时，循环会报错：</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">funcs</span> <span class="o">=</span> <span class="p">[];</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kr">const</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">funcs</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+<span class="c1">// Uncaught TypeError: Assignment to constant variable</span>
+</code></pre>
+</div>
+
+<p>另外，当使用 <code class="highlighter-rouge">for-in</code> 或 <code class="highlighter-rouge">for-of</code> 循环时，<code class="highlighter-rouge">const</code> 声明的变量的表现和 <code class="highlighter-rouge">let</code> 完全一致。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">funcs</span> <span class="o">=</span> <span class="p">[],</span>
+    <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="na">a</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="na">b</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="na">c</span><span class="p">:</span> <span class="kc">true</span>
+    <span class="p">};</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kr">const</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">funcs</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="nx">funcs</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">func</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">func</span><span class="p">();</span>
+<span class="p">});</span>
+</code></pre>
+</div>
+
+<p>这段代码的作用和在循环中的 <code class="highlighter-rouge">let</code> 声明一样，唯一的差别是变量 key 的值不能被修改。</p>
+
+<p><code class="highlighter-rouge">for-in</code> 和 <code class="highlighter-rouge">for-of</code> 循环能正常使用 <code class="highlighter-rouge">const</code> 是因为每次迭代都会创建一个<strong>新的</strong>变量绑定而不是去试图修改已存在的绑定。</p>
+
+<h3 id="全局块级绑定">全局块级绑定</h3>
+
+<p><code class="highlighter-rouge">let</code> 与 <code class="highlighter-rouge">const</code> 另一处不同体现在全局作用域上。</p>
+
+<p>如果在全局作用域使用 <code class="highlighter-rouge">let</code> 或 <code class="highlighter-rouge">const</code>，那么绑定就会发生在全局作用域内，但<strong>不会向全局对象内部添加任何属性</strong>。</p>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>  <span class="c1">// 1</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">a</span><span class="p">);</span>  <span class="c1">// undefined</span>
+
+<span class="kr">const</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">);</span>  <span class="c1">// 2</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">b</span><span class="p">);</span>  <span class="c1">// undefined</span>
+</code></pre>
+</div>
+
+<h2 id="总结">总结</h2>
+
+<p><code class="highlighter-rouge">let</code> 和 <code class="highlighter-rouge">const</code> 块级绑定给 JavaScript 引入了词法作用域的概念。这些声明不会被提升且仅存在声明它们的代码块中。
+但是，这就不能在声明之前就使用它们，即使是 <code class="highlighter-rouge">typeof</code> 这种安全操作。</p>
+
+<p>暂存性死区中绑定的存在会导致在声明位置之前的访问以失败告终。</p>
+
+<p>另外，在大多数情况下，<code class="highlighter-rouge">let</code> 和 <code class="highlighter-rouge">const</code> 的表现和 <code class="highlighter-rouge">var</code> 很相似，但在循环中并不是这样。</p>
+
+<p>对于 <code class="highlighter-rouge">let</code> 和 <code class="highlighter-rouge">const</code> 来说，每次迭代的开始都会创建新的绑定，意味着循环内部创建的函数可以在迭代时访问到当前的索引值，
+而不是在整个循环结束之后 (即 <code class="highlighter-rouge">var</code> 的表现形式)。在 <code class="highlighter-rouge">for</code> 中使用 <code class="highlighter-rouge">let</code> 声明也同样试用，但 <code class="highlighter-rouge">const</code> 声明则会抛出错误。</p>
+
+<p>目前关于块级绑定的最佳实践是使用 <code class="highlighter-rouge">const</code> 作为默认的声明方式，但变量需要更改时切换为 <code class="highlighter-rouge">let</code> 声明。</p>
+
+<p>保证代码中最基本的不可变性能防止错误的发生。</p>
+
+  </div>
+</article>
+
+
+
+
+<nav>
+  <ul class="pager">
+    
+    <li class="previous">
+      <a rel="prev" href="/javascript/%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1.html"
+        title="事件对象">&laquo; 前一篇</a>
+    </li>
+    
+
+    
+    <li class="next">
+      <a rel="next" href="/javascript/es6/ES6-%E5%B8%A6%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%BD%E6%95%B0.html"
+        title="ES6 带默认参数的函数">后一篇 &raquo;</a>
+    </li>
+    
+  </ul>
+</nav>
+<div id="disqus_thread"></div>
+
+<script>
+var disqus_config = function () {
+this.page.url = 'http://localhost:4000/javascript/es6/ES6-%E5%9D%97%E7%BA%A7%E7%BB%91%E5%AE%9A.html';
+this.page.identifier = '/javascript/es6/ES6-块级绑定';
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://www-hiiamtim-com-2.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+
+      <div class="sidebar col-lg-3 col-md-4 col-sm-12 col-xs-12">
+        <aside class="about">
+  <h3 class="aside-title">关于</h3>
+  <div class="aside-content">
+    <p>在路上</p>
+  </div>
+</aside>
+
+<aside class="categories_list">
+  <h3 class="aside-title">分类</h3>
+  <div class="aside-content">
+    <ul><li><a href="/category/javascript/" title="JavaScript">JavaScript</a> (5)</li><li><a href="/category/es6/" title="ES6">ES6</a> (3)</li></ul>
+  </div>
+</aside>
+
+<!--<aside class="subscribe">
+  <h3 class="aside-title">订阅</h3>
+  <div class="aside-content">
+    <p>&nbsp;<a href="/feed.xml"><i class="fa fa-rss fa-lg" aria-hidden="true"></i>&nbsp;RSS</a></p>
+  </div>
+</aside>-->
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer class="footer">
+      <p>&copy; 2017 Tim's Blog</p>
+      <p>Contact me at:
+        <a href="https://github.com/timleenights"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
+        or
+        <a href="mailto:timleenights@gmail.com"><i class="fa fa-envelope-o fa-2x" aria-hidden="true"></i></a>
+      </p>
+    </footer>
+  </body>
+</html>
