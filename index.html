@@ -47,6 +47,35 @@
   
     <article class="post">
       <header class="post-header">
+        <h1 class="post-title"><a href="/dom/children-%E4%B8%8E-childNodes-%E7%9A%84%E5%8C%BA%E5%88%AB.html">children 与 childNodes 的区别</a></h1>
+        <p class="post-meta">2017年4月18日 <a href="/category/dom/" title="DOM">DOM</a></p>
+      </header>
+      <!--<div class="post-content">
+        <h3 id="nodechildnodes"><code class="highlighter-rouge">Node.childNodes</code></h3>
+
+<p>返回包含指定节点的子节点的集合，包含所有节点 (包括元素节点 <code class="highlighter-rouge">element</code>，属性节点 <code class="highlighter-rouge">attr</code>，文本节点 <code class="highlighter-rouge">text</code> 等等)</p>
+
+<h3 id="parentnodechildren"><code class="highlighter-rouge">ParentNode.children</code></h3>
+
+<p>返回一个包含当前元素的子元素的集合 (只包含元素节点 <code class="highlighter-rouge">element</code>)</p>
+
+<hr />
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;div&gt;</span>测试<span class="nt">&lt;/div&gt;</span>
+</code></pre>
+</div>
+
+<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">'div'</span><span class="p">);</span>
+<span class="nx">a</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>  <span class="c1">// 0</span>
+<span class="nx">a</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>  <span class="c1">// 1</span>
+</code></pre>
+</div>
+
+      </div>-->
+    </article>
+  
+    <article class="post">
+      <header class="post-header">
         <h1 class="post-title"><a href="/javascript/es6/ES6-%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0.html">ES6 箭头函数</a></h1>
         <p class="post-meta">2017年3月29日 <a href="/category/javascript/" title="JavaScript">JavaScript</a>, <a href="/category/es6/" title="ES6">ES6</a></p>
       </header>
@@ -956,107 +985,14 @@ true
       </div>-->
     </article>
   
-    <article class="post">
-      <header class="post-header">
-        <h1 class="post-title"><a href="/javascript/%E6%9F%A5%E6%89%BE%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E5%87%BA%E7%8E%B0%E6%AC%A1%E6%95%B0%E6%9C%80%E5%A4%9A%E7%9A%84%E5%AD%97%E7%AC%A6.html">查找字符串中出现次数最多的字符</a></h1>
-        <p class="post-meta">2017年2月27日 <a href="/category/javascript/" title="JavaScript">JavaScript</a></p>
-      </header>
-      <!--<div class="post-content">
-        <h2 id="第-1-种方法">第 1 种方法</h2>
-
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nb">String</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">getMostString</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
-  <span class="kd">var</span> <span class="nx">maximumTime</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-      <span class="nx">maximumString</span><span class="p">;</span>
-
-  <span class="k">while</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">tempString</span> <span class="o">=</span> <span class="nx">str</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-    <span class="kd">var</span> <span class="nx">tempStr</span> <span class="o">=</span> <span class="nx">str</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="nx">tempString</span><span class="p">);</span>
-    <span class="kd">var</span> <span class="nx">tempTime</span> <span class="o">=</span> <span class="nx">str</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="p">(</span><span class="nx">str</span> <span class="o">=</span> <span class="nx">tempStr</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">''</span><span class="p">)).</span><span class="nx">length</span><span class="p">;</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">tempTime</span> <span class="o">&gt;</span> <span class="nx">maximumTime</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">maximumTime</span> <span class="o">=</span> <span class="nx">tempTime</span><span class="p">;</span>
-      <span class="nx">maximumString</span> <span class="o">=</span> <span class="nx">tempString</span><span class="p">;</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-
-  <span class="k">return</span> <span class="p">{</span><span class="s1">'maximumString'</span><span class="p">:</span> <span class="nx">maximumString</span><span class="p">,</span> <span class="s1">'maximumTime'</span><span class="p">:</span> <span class="nx">maximumTime</span><span class="p">};</span>
-<span class="p">}</span>
-</code></pre>
-</div>
-
-<h2 id="第-2-种方法">第 2 种方法</h2>
-
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nb">String</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">getMostString</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
-  <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{},</span>
-      <span class="nx">maximumTime</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-      <span class="nx">maximumString</span><span class="p">;</span>
-
-  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">str</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="kr">char</span> <span class="o">=</span> <span class="nx">str</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
-    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">obj</span><span class="p">[</span><span class="kr">char</span><span class="p">])</span> <span class="p">{</span>
-      <span class="nx">obj</span><span class="p">[</span><span class="kr">char</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-      <span class="nx">obj</span><span class="p">[</span><span class="kr">char</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-
-  <span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[];</span>
-  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">arr</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">obj</span><span class="p">[</span><span class="nx">key</span><span class="p">]);</span>
-  <span class="p">};</span>
-  <span class="kd">var</span> <span class="nx">maximumTime</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">arr</span><span class="p">);</span>
-
-  <span class="c1">// ES6 的方法</span>
-  <span class="c1">// let arr = Object.values(obj);</span>
-  <span class="c1">// let maximumTime = Math.max(...arr);</span>
-
-  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span><span class="p">(</span><span class="nx">obj</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">===</span> <span class="nx">maximumTime</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">return</span> <span class="p">{</span><span class="s1">'maximumString'</span><span class="p">:</span> <span class="nx">key</span><span class="p">,</span> <span class="s1">'maximumTime'</span><span class="p">:</span> <span class="nx">maximumTime</span><span class="p">};</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre>
-</div>
-
-<h2 id="第-3-种方法">第 3 种方法</h2>
-
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nb">String</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">getMostString</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">str</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
-  <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{},</span>
-      <span class="nx">maximumTime</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-      <span class="nx">maximumString</span><span class="p">;</span>
-
-  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">str</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="kr">char</span> <span class="o">=</span> <span class="nx">str</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
-    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">obj</span><span class="p">[</span><span class="kr">char</span><span class="p">])</span> <span class="p">{</span>
-      <span class="nx">obj</span><span class="p">[</span><span class="kr">char</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-      <span class="nx">obj</span><span class="p">[</span><span class="kr">char</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-
-  <span class="c1">// var maximumTime = Math.max.apply(null, Object.values(obj));</span>
-  <span class="c1">// 或者：</span>
-  <span class="kd">var</span> <span class="nx">maximumTime</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(...</span><span class="nb">Object</span><span class="p">.</span><span class="nx">values</span><span class="p">(</span><span class="nx">obj</span><span class="p">));</span>
-
-  <span class="kd">var</span> <span class="nx">maximumString</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">obj</span><span class="p">).</span><span class="nx">reduce</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">){</span>
-    <span class="k">return</span> <span class="nx">obj</span><span class="p">[</span><span class="nx">a</span><span class="p">]</span> <span class="o">&gt;</span> <span class="nx">obj</span><span class="p">[</span><span class="nx">b</span><span class="p">]</span> <span class="p">?</span> <span class="nx">a</span> <span class="p">:</span> <span class="nx">b</span><span class="p">;</span>
-  <span class="p">})</span>
-
-  <span class="k">return</span> <span class="p">{</span><span class="s1">'maximumString'</span><span class="p">:</span> <span class="nx">maximumString</span><span class="p">,</span> <span class="s1">'maximumTime'</span><span class="p">:</span> <span class="nx">maximumTime</span><span class="p">};</span>
-<span class="p">}</span>
-</code></pre>
-</div>
-
-      </div>-->
-    </article>
-  
 
   <nav>
     <ul class="pager">
       
+      
+        <li class="next">
+          <a href="/page2">后一页 &raquo;</a>
+        </li>
       
     </ul>
   </nav>
@@ -1075,7 +1011,7 @@ true
 <aside class="categories_list">
   <h3 class="aside-title">分类</h3>
   <div class="aside-content">
-    <ul><li><a href="/category/javascript/" title="JavaScript">JavaScript</a> (5)</li><li><a href="/category/es6/" title="ES6">ES6</a> (3)</li></ul>
+    <ul><li><a href="/category/javascript/" title="JavaScript">JavaScript</a> (5)</li><li><a href="/category/es6/" title="ES6">ES6</a> (3)</li><li><a href="/category/dom/" title="DOM">DOM</a> (1)</li></ul>
   </div>
 </aside>
 
@@ -1095,7 +1031,7 @@ true
       <p>Contact me at:
         <a href="https://github.com/timleenights"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
         or
-        <a href="mailto:timleenights@gmail.com"><i class="fa fa-envelope-o fa-2x" aria-hidden="true"></i></a>
+        <a href="mailto:hiiamtim.com@gmail.com"><i class="fa fa-envelope-o fa-2x" aria-hidden="true"></i></a>
       </p>
     </footer>
   </body>
